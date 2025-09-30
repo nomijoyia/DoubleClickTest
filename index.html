@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mouse Double Click Test</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+background-color: #0d1b1e;
+color: white;
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 20px;
+background-image: linear-gradient(135deg, #0d1b1e 0%, #1a363a 100%);
+}
+
+.container {
+background-color: #1a363a;
+border-radius: 16px;
+padding: 30px;
+width: 100%;
+max-width: 1000px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+overflow-y: auto;
+}
+
+.header {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+margin-bottom: 20px;
+padding-bottom: 15px;
+border-bottom: 1px solid #2d4c4f;
+}
+
+.header-left h1 {
+font-size: 2.2rem;
+font-weight: 700;
+letter-spacing: 1px;
+margin-bottom: 8px;
+color: #ffffff;
+}
+
+.header-left p {
+font-size: 1.1rem;
+opacity: 0.8;
+line-height: 1.6;
+max-width: 600px;
+}
+
+.header-right {
+text-align: right;
+font-size: 0.9rem;
+opacity: 0.8;
+}
+
+.header-right .built-for {
+font-weight: 600;
+color: #4ade80;
+margin-bottom: 5px;
+}
+
+.header-right .version {
+font-weight: 600;
+color: #60a5fa;
+}
+
+.main-content {
+display: grid;
+grid-template-columns: 2fr 1fr;
+gap: 20px;
+}
+
+.click-area {
+background-color: #142a2d;
+border-radius: 12px;
+padding: 25px;
+border: 1px solid #2d4c4f;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.click-instructions {
+text-align: center;
+margin-bottom: 20px;
+font-size: 1.1rem;
+opacity: 0.8;
+}
+
+.click-button {
+width: 200px;
+height: 200px;
+border-radius: 50%;
+background: linear-gradient(135deg, #1e3a3d 0%, #2d4c4f 100%);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.8rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+border: 2px solid #4ade80;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.click-button:hover {
+transform: scale(1.05);
+box-shadow: 0 8px 25px rgba(74, 222, 128, 0.3);
+}
+
+.click-button:active {
+transform: scale(0.98);
+}
+
+.controls {
+display: flex;
+gap: 10px;
+margin-top: 20px;
+justify-content: center;
+}
+
+.control-button {
+padding: 10px 20px;
+border-radius: 6px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+border: none;
+}
+
+.start-button {
+background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+color: white;
+}
+
+.start-button:hover {
+background: linear-gradient(135deg, #059669 0%, #047857 100%);
+transform: translateY(-2px);
+}
+
+.stop-button {
+background: linear-gradient(135deg, #f59e0b 0%, #f59e0b 100%);
+color: white;
+}
+
+.stop-button:hover {
+background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+transform: translateY(-2px);
+}
+
+.reset-button {
+background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+color: white;
+}
+
+.reset-button:hover {
+background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+transform: translateY(-2px);
+}
+
+.how-it-works {
+margin-top: 20px;
+text-align: center;
+font-size: 0.9rem;
+opacity: 0.7;
+line-height: 1.5;
+}
+
+.metrics-container {
+background-color: #142a2d;
+border-radius: 12px;
+padding: 25px;
+border: 1px solid #2d4c4f;
+}
+
+.metrics-header {
+font-size: 1.3rem;
+font-weight: 600;
+margin-bottom: 20px;
+color: #ffffff;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.metrics-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 15px;
+}
+
+.metric-card {
+background-color: #1a363a;
+border-radius: 8px;
+padding: 15px;
+border: 1px solid #2d4c4f;
+transition: transform 0.3s ease;
+}
+
+.metric-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.metric-label {
+font-size: 0.9rem;
+opacity: 0.8;
+margin-bottom: 8px;
+}
+
+.metric-value {
+font-size: 1.8rem;
+font-weight: 700;
+color: #4ade80;
+}
+
+.footer {
+text-align: center;
+margin-top: 25px;
+font-size: 0.9rem;
+opacity: 0.7;
+}
+
+/* Additional Features Section */
+.additional-features {
+margin-top: 20px;
+background-color: #142a2d;
+border-radius: 12px;
+padding: 20px;
+border: 1px solid #2d4c4f;
+}
+
+.feature-header {
+font-size: 1.3rem;
+font-weight: 600;
+margin-bottom: 15px;
+color: #ffffff;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.threshold-input {
+width: 100%;
+padding: 12px 15px;
+background-color: #1e2024;
+border: 2px solid #4a4e55;
+border-radius: 6px;
+color: white;
+font-size: 1.1rem;
+margin-bottom: 15px;
+}
+
+.feature-buttons {
+display: flex;
+gap: 10px;
+margin-bottom: 15px;
+}
+
+.feature-button {
+padding: 10px 20px;
+border-radius: 6px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+border: none;
+flex-grow: 1;
+text-align: center;
+}
+
+.reset-all-button {
+background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+color: white;
+}
+
+.reset-all-button:hover {
+background: linear-gradient(135deg, #059669 0%, #047857 100%);
+transform: translateY(-2px);
+}
+
+.settings-button {
+background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+color: white;
+}
+
+.settings-button:hover {
+background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+transform: translateY(-2px);
+}
+
+.event-log {
+margin-top: 15px;
+background-color: #1a363a;
+border-radius: 8px;
+padding: 15px;
+border: 1px solid #2d4c4f;
+}
+
+.event-log-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+padding-bottom: 10px;
+border-bottom: 1px solid #2d4c4f;
+font-size: 1.1rem;
+font-weight: 600;
+}
+
+.clear-log-button {
+background: #6b7280;
+color: white;
+border: none;
+padding: 5px 10px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 0.9rem;
+}
+
+.clear-log-button:hover {
+background: #4b5563;
+}
+
+.event-log-entry {
+padding: 10px;
+margin: 5px 0;
+background-color: rgba(59, 130, 246, 0.1);
+border-radius: 4px;
+border-left: 4px solid #3b82f6;
+font-size: 0.95rem;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.event-log-entry:first-child {
+margin-top: 0;
+}
+
+.event-icon {
+font-size: 1.2rem;
+}
+
+@media (max-width: 800px) {
+.container {
+padding: 20px;
+max-width: 100%;
+}
+
+.header {
+flex-direction: column;
+align-items: flex-start;
+}
+
+.header-right {
+text-align: left;
+margin-top: 15px;
+}
+
+.main-content {
+grid-template-columns: 1fr;
+}
+
+.click-button {
+width: 150px;
+height: 150px;
+font-size: 1.5rem;
+}
+
+.metrics-grid {
+grid-template-columns: 1fr;
+}
+
+.metric-value {
+font-size: 1.5rem;
+}
+
+.feature-buttons {
+flex-direction: column;
+}
+}
+
+@media (max-width: 600px) {
+.container {
+padding: 15px;
+}
+
+.header-left h1 {
+font-size: 1.8rem;
+}
+
+.click-instructions {
+font-size: 1rem;
+}
+
+.controls {
+flex-wrap: wrap;
+}
+
+.control-button {
+padding: 8px 16px;
+font-size: 0.9rem;
+}
+
+.additional-features {
+padding: 15px;
+}
+
+.threshold-input {
+font-size: 1rem;
+}
+
+.feature-button {
+padding: 8px 16px;
+font-size: 0.9rem;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<div class="header-left">
+<h1>Mouse Double Click Test</h1>
+<p>Accurate, research-backed double-click detection. Not a gimmick — real metrics you can trust.</p>
+</div>
+<div class="header-right">
+<div class="built-for">Built for: Developers • QA • Gamers</div>
+<div class="version">Version 1.0</div>
+</div>
+</div>
+
+<div class="main-content">
+<div class="click-area">
+<div class="click-instructions">
+Click area — every click is recorded with a timestamp.
+</div>
+
+<div class="click-button" id="clickButton">Click</div>
+
+<div class="controls">
+<button class="control-button start-button" id="startButton">Start Recording</button>
+<button class="control-button stop-button" id="stopButton">Stop</button>
+<button class="control-button reset-button" id="resetButton">Reset</button>
+</div>
+
+<div class="how-it-works">
+How it works: We store each click timestamp and compute consecutive intervals.
+A consecutive interval ≤ threshold counts as a double-click. This respects natural user patterns and avoids fake scoring.
+</div>
+</div>
+
+<div class="metrics-container">
+<div class="metrics-header">Key Metrics</div>
+
+<div class="metrics-grid">
+<div class="metric-card">
+<div class="metric-label">Total Clicks</div>
+<div class="metric-value" id="totalClicks">0</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-label">Consecutive Pairs</div>
+<div class="metric-value" id="consecutivePairs">0</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-label">Double Clicks</div>
+<div class="metric-value" id="doubleClicks">0</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-label">Double Rate (pairs)</div>
+<div class="metric-value" id="doubleRatePairs">0%</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-label">Double Rate (clicks)</div>
+<div class="metric-value" id="doubleRateClicks">0%</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-label">Average Interval</div>
+<div class="metric-value" id="averageInterval">0ms</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Additional Features Section -->
+<div class="additional-features">
+<div class="feature-header">Additional Features</div>
+
+<div class="threshold-input-container">
+<label style="display: block; margin-bottom: 5px; font-weight: 600;">Click Detection Threshold:</label>
+<input type="text" id="thresholdInput" class="threshold-input" value="300" placeholder="Enter threshold in milliseconds">
+</div>
+
+<div class="feature-buttons">
+<button class="feature-button reset-all-button" id="resetAllButton">RESET ALL</button>
+<button class="feature-button settings-button" id="settingsButton">SETTINGS</button>
+</div>
+
+<div class="event-log">
+<div class="event-log-header">
+Event Log
+<button class="clear-log-button" id="clearLogButton">Clear Log</button>
+</div>
+<div class="event-log-entry">
+<span class="event-icon">🚀</span>
+<span>Welcome to Mouse Double Click Test!</span>
+</div>
+<div class="event-log-entry">
+<span class="event-icon">👉</span>
+<span>Click "Start Recording" to begin testing.</span>
+</div>
+</div>
+</div>
+
+<div class="footer">
+<p>Mouse Double Click Test Tool • Designed for accurate measurement of user interaction patterns</p>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const clickButton = document.getElementById('clickButton');
+const startButton = document.getElementById('startButton');
+const stopButton = document.getElementById('stopButton');
+const resetButton = document.getElementById('resetButton');
+const totalClicksElement = document.getElementById('totalClicks');
+const consecutivePairsElement = document.getElementById('consecutivePairs');
+const doubleClicksElement = document.getElementById('doubleClicks');
+const doubleRatePairsElement = document.getElementById('doubleRatePairs');
+const doubleRateClicksElement = document.getElementById('doubleRateClicks');
+const averageIntervalElement = document.getElementById('averageInterval');
+const thresholdInput = document.getElementById('thresholdInput');
+const resetAllButton = document.getElementById('resetAllButton');
+const settingsButton = document.getElementById('settingsButton');
+const clearLogButton = document.getElementById('clearLogButton');
+const eventLog = document.querySelector('.event-log');
+
+let clickCount = 0;
+let doubleClickCount = 0;
+let consecutivePairs = 0;
+let clickTimestamps = [];
+let isRecording = false;
+let doubleClickThreshold = 300; // milliseconds
+let soundFeedback = true;
+let visualFeedback = 'standard';
+
+// Audio context for sound generation
+let audioContext;
+
+function playSound(type = 'click') {
+if (!soundFeedback || typeof window.AudioContext === 'undefined') return;
+
+try {
+if (!audioContext) {
+audioContext = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+const oscillator = audioContext.createOscillator();
+const gainNode = audioContext.createGain();
+
+oscillator.connect(gainNode);
+gainNode.connect(audioContext.destination);
+
+switch (type) {
+case 'click':
+oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+oscillator.type = 'square';
+gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+break;
+case 'double':
+oscillator.frequency.setValueAtTime(1200, audioContext.currentTime);
+oscillator.type = 'sine';
+gainNode.gain.setValueAtTime(0.15, audioContext.currentTime);
+break;
+case 'start':
+oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
+oscillator.type = 'triangle';
+gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+break;
+case 'stop':
+oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+oscillator.type = 'sawtooth';
+gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+break;
+}
+
+oscillator.start();
+gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.1);
+oscillator.stop(audioContext.currentTime + 0.1);
+} catch (e) {
+console.warn('Audio playback failed:', e);
+}
+}
+
+function applyVisualFeedback(isDoubleClick = false) {
+if (visualFeedback === 'pulse') {
+clickButton.style.animation = isDoubleClick ? 'pulseDouble 0.3s ease-in-out' : 'pulseSingle 0.3s ease-in-out';
+setTimeout(() => {
+clickButton.style.animation = '';
+}, 300);
+} else if (visualFeedback === 'colorChange') {
+const originalBackground = clickButton.style.background;
+clickButton.style.background = isDoubleClick ?
+'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' :
+'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+setTimeout(() => {
+clickButton.style.background = originalBackground;
+}, 200);
+}
+}
+
+// Add CSS for animations
+const style = document.createElement('style');
+style.textContent = `
+@keyframes pulseSingle {
+0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+50% { transform: scale(1.1); box-shadow: 0 8px 25px rgba(74, 222, 128, 0.6); }
+100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+}
+@keyframes pulseDouble {
+0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+50% { transform: scale(1.15); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.8); }
+100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+}
+`;
+document.head.appendChild(style);
+
+function addEventLogEntry(message) {
+const logEntry = document.createElement('div');
+logEntry.className = 'event-log-entry';
+logEntry.innerHTML = `<span class="event-icon">📝</span><span>${message}</span>`;
+eventLog.appendChild(logEntry);
+eventLog.scrollTop = eventLog.scrollHeight;
+}
+
+function updateMetrics() {
+totalClicksElement.textContent = clickCount;
+consecutivePairsElement.textContent = consecutivePairs;
+doubleClicksElement.textContent = doubleClickCount;
+
+// Calculate double rate (pairs)
+const doubleRatePairs = consecutivePairs > 0 ? Math.round((doubleClickCount / consecutivePairs) * 100) : 0;
+doubleRatePairsElement.textContent = `${doubleRatePairs}%`;
+
+// Calculate double rate (clicks)
+const doubleRateClicks = clickCount > 0 ? Math.round((doubleClickCount / clickCount) * 100) : 0;
+doubleRateClicksElement.textContent = `${doubleRateClicks}%`;
+
+// Calculate average interval
+if (clickTimestamps.length > 1) {
+let totalInterval = 0;
+for (let i = 1; i < clickTimestamps.length; i++) {
+totalInterval += clickTimestamps[i] - clickTimestamps[i-1];
+}
+const avgInterval = Math.round(totalInterval / (clickTimestamps.length - 1));
+averageIntervalElement.textContent = `${avgInterval}ms`;
+} else {
+averageIntervalElement.textContent = `0ms`;
+}
+}
+
+function recordClick() {
+if (!isRecording) return;
+
+const currentTime = Date.now();
+clickCount++;
+clickTimestamps.push(currentTime);
+
+// Check for consecutive pairs
+if (clickTimestamps.length >= 2) {
+consecutivePairs++;
+const lastInterval = currentTime - clickTimestamps[clickTimestamps.length - 2];
+
+// Check if this is a double click
+if (lastInterval <= doubleClickThreshold) {
+doubleClickCount++;
+playSound('double');
+applyVisualFeedback(true);
+addEventLogEntry(`Double click detected! Click ${clickCount}: ${currentTime} (Interval: ${lastInterval}ms)`);
+} else {
+playSound('click');
+applyVisualFeedback(false);
+addEventLogEntry(`Click ${clickCount}: ${currentTime} (Interval: ${lastInterval}ms)`);
+}
+} else {
+playSound('click');
+applyVisualFeedback(false);
+addEventLogEntry(`Click ${clickCount}: ${currentTime}`);
+}
+
+updateMetrics();
+}
+
+clickButton.addEventListener('click', recordClick);
+
+startButton.addEventListener('click', function() {
+isRecording = true;
+clickCount = 0;
+doubleClickCount = 0;
+consecutivePairs = 0;
+clickTimestamps = [];
+// Clear event log except header
+const header = eventLog.querySelector('.event-log-header');
+eventLog.innerHTML = '';
+eventLog.appendChild(header);
+addEventLogEntry('Recording started...');
+playSound('start');
+updateMetrics();
+});
+
+stopButton.addEventListener('click', function() {
+isRecording = false;
+addEventLogEntry('Recording stopped.');
+playSound('stop');
+});
+
+resetButton.addEventListener('click', function() {
+isRecording = false;
+clickCount = 0;
+doubleClickCount = 0;
+consecutivePairs = 0;
+clickTimestamps = [];
+// Clear event log except header
+const header = eventLog.querySelector('.event-log-header');
+eventLog.innerHTML = '';
+eventLog.appendChild(header);
+addEventLogEntry('All data reset.');
+updateMetrics();
+});
+
+// Threshold input validation
+thresholdInput.addEventListener('input', function() {
+let value = parseInt(this.value);
+if (isNaN(value)) value = 300;
+value = Math.max(100, Math.min(1000, value));
+this.value = value;
+doubleClickThreshold = value;
+addEventLogEntry(`Click detection threshold set to ${value}ms.`);
+});
+
+// Reset all button functionality
+resetAllButton.addEventListener('click', function() {
+resetButton.click();
+thresholdInput.value = '300';
+doubleClickThreshold = 300;
+soundFeedback = true;
+visualFeedback = 'standard';
+addEventLogEntry('All settings and data have been reset.');
+});
+
+// Settings button functionality - now working properly with visual feedback and sounds
+settingsButton.addEventListener('click', function() {
+// Create a simple settings modal
+const settingsModal = document.createElement('div');
+settingsModal.style.position = 'fixed';
+settingsModal.style.top = '0';
+settingsModal.style.left = '0';
+settingsModal.style.width = '100%';
+settingsModal.style.height = '100%';
+settingsModal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+settingsModal.style.display = 'flex';
+settingsModal.style.alignItems = 'center';
+settingsModal.style.justifyContent = 'center';
+settingsModal.style.zIndex = '1000';
+settingsModal.style.padding = '20px';
+
+const settingsContent = document.createElement('div');
+settingsContent.style.backgroundColor = '#1a363a';
+settingsContent.style.borderRadius = '12px';
+settingsContent.style.padding = '25px';
+settingsContent.style.width = '90%';
+settingsContent.style.maxWidth = '500px';
+settingsContent.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.5)';
+
+// Set initial values for the dropdowns
+const soundFeedbackValue = soundFeedback ? 'on' : 'off';
+const visualFeedbackValue = visualFeedback;
+
+settingsContent.innerHTML = `
+<h2 style="color: white; margin-bottom: 20px; text-align: center;">Settings</h2>
+<div style="margin-bottom: 20px;">
+<label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Click Detection Threshold:</label>
+<input type="text" id="modalThresholdInput" value="${doubleClickThreshold}" style="width: 100%; padding: 10px; background-color: #1e2024; border: 2px solid #4a4e55; border-radius: 6px; color: white; font-size: 1rem;">
+</div>
+<div style="margin-bottom: 20px;">
+<label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Enable Sound Feedback:</label>
+<select id="soundFeedback" style="width: 100%; padding: 10px; background-color: #1e2024; border: 2px solid #4a4e55; border-radius: 6px; color: white; font-size: 1rem;">
+<option value="on" ${soundFeedbackValue === 'on' ? 'selected' : ''}>On</option>
+<option value="off" ${soundFeedbackValue === 'off' ? 'selected' : ''}>Off</option>
+</select>
+</div>
+<div style="margin-bottom: 20px;">
+<label style="display: block; margin-bottom: 5px; font-weight: 600; color: white;">Visual Feedback Style:</label>
+<select id="visualFeedback" style="width: 100%; padding: 10px; background-color: #1e2024; border: 2px solid #4a4e55; border-radius: 6px; color: white; font-size: 1rem;">
+<option value="standard" ${visualFeedbackValue === 'standard' ? 'selected' : ''}>Standard</option>
+<option value="pulse" ${visualFeedbackValue === 'pulse' ? 'selected' : ''}>Pulse Animation</option>
+<option value="colorChange" ${visualFeedbackValue === 'colorChange' ? 'selected' : ''}>Color Change</option>
+</select>
+</div>
+<div style="display: flex; gap: 10px; justify-content: center;">
+<button id="saveSettings" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Save Settings</button>
+<button id="closeSettings" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600;">Close</button>
+</div>
+`;
+
+settingsModal.appendChild(settingsContent);
+document.body.appendChild(settingsModal);
+
+// Save settings button
+document.getElementById('saveSettings').addEventListener('click', function() {
+const newThreshold = parseInt(document.getElementById('modalThresholdInput').value);
+if (!isNaN(newThreshold) && newThreshold >= 100 && newThreshold <= 1000) {
+doubleClickThreshold = newThreshold;
+thresholdInput.value = newThreshold;
+addEventLogEntry(`Settings saved: Click threshold set to ${newThreshold}ms.`);
+}
+
+soundFeedback = document.getElementById('soundFeedback').value === 'on';
+visualFeedback = document.getElementById('visualFeedback').value;
+
+addEventLogEntry(`Sound feedback: ${soundFeedback ? 'Enabled' : 'Disabled'}`);
+addEventLogEntry(`Visual feedback: ${visualFeedback}`);
+
+document.body.removeChild(settingsModal);
+});
+
+// Close settings button
+document.getElementById('closeSettings').addEventListener('click', function() {
+document.body.removeChild(settingsModal);
+});
+});
+
+// Clear log button functionality
+clearLogButton.addEventListener('click', function() {
+// Clear event log except header
+const header = eventLog.querySelector('.event-log-header');
+eventLog.innerHTML = '';
+eventLog.appendChild(header);
+addEventLogEntry('Event log cleared.');
+});
+});
+</script>
+</body>
+</html>
