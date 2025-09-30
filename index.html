@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -474,9 +476,63 @@ padding: 8px 16px;
 font-size: 0.9rem;
 }
 }
+  .site-header {
+  background: linear-gradient(135deg, #142a2d, #1f3c42);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.site-header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-header .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.site-header .logo h1 {
+  font-size: 1.5rem;
+  color: #4ade80;
+  margin: 0;
+}
+
+.site-header .nav-links a {
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #e5e7eb;
+  transition: color 0.3s ease;
+}
+
+.site-header .nav-links a:hover {
+  color: #4ade80;
+}
+
 </style>
 </head>
 <body>
+  <header class="site-header">
+  <div class="logo">
+    <img src="your-logo.png" alt="Logo">
+    <h1>Double Click Test</h1>
+  </div>
+  <nav class="nav-links">
+    <a href="#home">Home</a>
+    <a href="#test">Test</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
 <div class="container">
 <div class="header">
 <div class="header-left">
@@ -966,6 +1022,7 @@ addEventLogEntry('Event log cleared.');
 </body>
 
 </html>
+
 
 
 
